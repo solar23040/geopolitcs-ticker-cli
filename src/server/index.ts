@@ -189,6 +189,6 @@ mountStatic(app);
 
 scheduleNewsRefresh();
 
-serve({ fetch: app.fetch, port: PORT }, (info) => {
-  console.log(`geoticker server listening on http://localhost:${info.port}`);
+serve({ fetch: app.fetch, port: PORT, hostname: "0.0.0.0" }, (info) => {
+  console.log(`geoticker server listening on http://0.0.0.0:${info.port}`);
 });

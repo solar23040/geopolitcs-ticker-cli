@@ -1,8 +1,9 @@
 node_modules/
+web/node_modules/
 dist/
 web/dist/
 web/.angular/
-web/node_modules/
+.git
 .env
-npm-debug.log*
-.DS_Store
+*.log
+README.md
