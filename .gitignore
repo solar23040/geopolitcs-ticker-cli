@@ -39,3 +39,5 @@ Thumbs.db
 # Test / coverage
 coverage/
 .nyc_output/
+node_modules/
+dist/
