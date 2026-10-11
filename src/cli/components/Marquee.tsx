@@ -9,6 +9,8 @@ import { themeColor } from "../ui-theme.js";
 
 export function regionColor(r: Region): string {
   switch (r) {
+    case "India":
+      return "#FF9933";
     case "Middle East":
       return "red";
     case "Europe":

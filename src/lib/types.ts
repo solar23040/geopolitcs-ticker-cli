@@ -1,4 +1,5 @@
 export type Region =
+  | "India"
   | "Middle East"
   | "Europe"
   | "Asia-Pacific"
@@ -33,6 +34,7 @@ export interface NewsItem {
 }
 
 export const ALL_REGIONS: Region[] = [
+  "India",
   "Middle East",
   "Europe",
   "Asia-Pacific",

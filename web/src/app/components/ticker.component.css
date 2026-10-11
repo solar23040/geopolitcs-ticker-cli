@@ -6,6 +6,7 @@
 .tick a { color: var(--text); text-decoration: none; }
 .tick a:hover { color: var(--sel); text-decoration: underline; }
 .region { font-size: 0.68rem; border: 1px solid var(--accent); color: var(--accent); border-radius: 3px; padding: 0 0.3rem; }
+.region.india { border-color: #FF9933; color: #FF9933; }
 .src { color: var(--dim); font-size: 0.75rem; }
 .chip { font-size: 0.72rem; color: var(--sel); }
 .sep { color: var(--dim); padding: 0 0.75rem; }

@@ -82,7 +82,7 @@ import type { RegionFilter } from "./core/model";
 
       <footer class="ft">
         <span>Rule-based signals, not financial advice.</span>
-        <span class="keys">j/k move · Enter open · 1-6 filter · / search · t theme · ? help</span>
+        <span class="keys">j/k move · Enter open · 1-7 filter · / search · t theme · ? help</span>
       </footer>
 
       @if (showHelp()) {
@@ -221,7 +221,7 @@ export class AppComponent {
         break;
       default: {
         const n = Number(e.key);
-        if (Number.isInteger(n) && n >= 1 && n <= 6) {
+        if (Number.isInteger(n) && n >= 1 && n <= FILTERS.length) {
           const f = FILTERS[n - 1];
           if (f) {
             this.filter.set(f);

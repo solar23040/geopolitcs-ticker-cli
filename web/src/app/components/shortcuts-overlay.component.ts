@@ -9,7 +9,7 @@ import { ChangeDetectionStrategy, Component, output } from "@angular/core";
         <dl>
           <div><dt>j / k · ↑ ↓</dt><dd>Move selection</dd></div>
           <div><dt>Enter / o</dt><dd>Open story in new tab</dd></div>
-          <div><dt>1 – 6</dt><dd>Region filters</dd></div>
+          <div><dt>1 – 7</dt><dd>Region filters</dd></div>
           <div><dt>/</dt><dd>Search</dd></div>
           <div><dt>t</dt><dd>Cycle theme</dd></div>
           <div><dt>?</dt><dd>This overlay</dd></div>

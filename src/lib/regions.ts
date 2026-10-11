@@ -1,6 +1,12 @@
 import type { Region } from "./types.js";
 
 const KEYWORDS: Record<Exclude<Region, "Global">, string[]> = {
+  India: [
+    "india", "indian", "new delhi", "delhi", "mumbai", "modi",
+    " rbi ", "sensex", "nifty", "rupee", "brics", "kashmir",
+    " lac ", "pakistan border", "isro", "bengaluru", "chennai",
+    "kolkata", "jaishankar", "adani", "reliance", "tata", "quad"
+  ],
   "Middle East": [
     "israel", "gaza", "palestine", "palestinian", "hamas", "hezbollah",
     "iran", "tehran", "iraq", "baghdad", "syria", "damascus", "lebanon",
@@ -77,6 +83,7 @@ export function normalizeRegionName(name: string): Region | "All" | null {
   if (n === "all") return "All";
   if (n === "middle east" || n === "middle-east" || n === "mideast" || n === "me") return "Middle East";
   if (n === "europe" || n === "eu") return "Europe";
+  if (n === "india") return "India";
   if (n === "asia-pacific" || n === "asia pacific" || n === "asia" || n === "apac" || n === "indo-pacific") return "Asia-Pacific";
   if (n === "americas" || n === "america" || n === "us" || n === "americas ") return "Americas";
   if (n === "africa") return "Africa";

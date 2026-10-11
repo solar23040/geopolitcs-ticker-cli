@@ -50,6 +50,7 @@ export class ThemeService {
       const v = window.localStorage.getItem(FILTER_KEY);
       if (
         v === "All" ||
+        v === "India" ||
         v === "Middle East" ||
         v === "Europe" ||
         v === "Asia-Pacific" ||

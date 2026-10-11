@@ -12,6 +12,7 @@ import type { RegionFilter } from "../core/model";
             type="button"
             class="chip"
             [class.active]="active() === f"
+            [class.india]="f === 'India'"
             [attr.aria-pressed]="active() === f"
             (click)="active.set(f)"
           >

@@ -4,7 +4,7 @@ import type { RegionFilter } from "../../lib/types.js";
 import type { UiTheme } from "../ui-theme.js";
 import { themeColor } from "../ui-theme.js";
 
-export const FILTERS: RegionFilter[] = ["All", "Middle East", "Europe", "Asia-Pacific", "Americas", "Africa"];
+export const FILTERS: RegionFilter[] = ["All", "India", "Middle East", "Europe", "Asia-Pacific", "Americas", "Africa"];
 
 interface Props {
   active: RegionFilter;

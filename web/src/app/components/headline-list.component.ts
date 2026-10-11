@@ -22,7 +22,7 @@ const OLD_MS = 3 * 3600 * 1000;
             [attr.aria-selected]="$index === selected()"
             (click)="select.emit($index)"
           >
-            <span class="region">{{ it.region }}</span>
+            <span class="region" [class.india]="it.region === 'India'">{{ it.region }}</span>
             <span class="ttl">{{ it.title }}</span>
             @if (isNew(it)) {
               <span class="new">NEW</span>

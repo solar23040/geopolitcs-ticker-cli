@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Text } from "ink";
 
 const ROWS: Array<[string, string]> = [
-  ["0-5 / ←/→", "change region filter"],
+  ["0-6 / ←/→", "change region filter"],
   ["↑/↓ or j/k", "move selection (scroll assets when impact focused)"],
   ["Tab", "switch focus list / impact"],
   ["Enter / o", "open link in browser"],

@@ -45,6 +45,7 @@ export interface Mood {
 
 export const FILTERS: RegionFilter[] = [
   "All",
+  "India",
   "Middle East",
   "Europe",
   "Asia-Pacific",

@@ -15,8 +15,8 @@ const program = new Command();
 program
   .name("geoticker")
   .description("Geopolitics news ticker for the terminal")
-  .option("--region <name>", "start with a filter (All, Middle East, Europe, Asia-Pacific, Americas, Africa, Global)")
-  .option("--speed <n>", "marquee chars per second", (v: string) => Number(v), 12)
+  .option("--region <name>", "start with a filter (All, India, Middle East, Europe, Asia-Pacific, Americas, Africa, Global)")
+  .option("--speed <n>", "marquee chars per second", (v: string) => Number(v), 7)
   .option("--interval <seconds>", "refresh interval in seconds", (v: string) => Number(v), 60)
   .option("--once", "print latest 20 headlines and exit", false)
   .option("--no-prices", "skip all network calls for quotes", false);
@@ -37,7 +37,7 @@ if (opts.region) {
   else console.error(`Unknown region "${opts.region}", using All.`);
 }
 
-const speed = Number.isFinite(opts.speed) && opts.speed > 0 ? opts.speed : 12;
+const speed = Number.isFinite(opts.speed) && opts.speed > 0 ? opts.speed : 7;
 const intervalSec = Number.isFinite(opts.interval) && opts.interval > 0 ? Math.floor(opts.interval) : 60;
 const pricesEnabled = opts.prices !== false;
 const noColor = Boolean(process.env.NO_COLOR) || !process.stdout.isTTY;
@@ -67,7 +67,8 @@ async function runOnce(): Promise<void> {
         console.log(head + tail);
       } else {
         let color: (s: string) => string = chalk.white;
-        if (it.region === "Middle East") color = chalk.red;
+        if (it.region === "India") color = chalk.hex("#FF9933");
+        else if (it.region === "Middle East") color = chalk.red;
         else if (it.region === "Europe") color = chalk.blue;
         else if (it.region === "Asia-Pacific") color = chalk.green;
         else if (it.region === "Americas") color = chalk.yellow;

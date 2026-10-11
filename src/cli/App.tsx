@@ -213,7 +213,7 @@ function App({ initialRegion, speed, intervalSec, noColor, pricesEnabled }: Prop
       cycleFilter(1);
       return;
     }
-    if (/^[0-5]$/.test(input)) {
+    if (/^[0-6]$/.test(input)) {
       const f = FILTERS[Number(input)];
       if (f) {
         setFilter(f);

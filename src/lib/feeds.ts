@@ -17,7 +17,10 @@ export const FEEDS: FeedDef[] = [
   },
   { name: "Guardian", url: "https://www.theguardian.com/world/rss" },
   { name: "DW", url: "https://rss.dw.com/rdf/rss-en-world" },
-  { name: "NPR", url: "https://feeds.npr.org/1004/rss.xml" }
+  { name: "NPR", url: "https://feeds.npr.org/1004/rss.xml" },
+  { name: "The Hindu", url: "https://www.thehindu.com/news/international/feeder/default.rss" },
+  { name: "Indian Express", url: "https://indianexpress.com/section/world/feed/" },
+  { name: "Times of India", url: "https://timesofindia.indiatimes.com/rssfeeds/296589292.cms" }
 ];
 
 const parser = new Parser({ timeout: 5000 });
