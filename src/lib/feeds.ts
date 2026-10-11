@@ -33,6 +33,54 @@ function normalizeTitle(t: string): string {
     .trim();
 }
 
+// Common words that carry no story identity; excluded from similarity.
+// Includes outlet boilerplate (e.g. Inshorts' "Tap to know more") that
+// otherwise merges unrelated stories from the same outlet.
+const STOPWORDS = new Set([
+  "the", "a", "an", "and", "or", "of", "to", "in", "on", "for", "with",
+  "as", "at", "by", "from", "over", "after", "amid", "says", "say",
+  "new", "latest", "live", "updates", "update", "breaking", "world",
+  "news", "report", "reports", "what", "why", "how", "will", "its",
+  "tap", "know", "more", "inshorts", "watch"
+]);
+
+function titleTokens(t: string): Set<string> {
+  return new Set(
+    normalizeTitle(t)
+      .split(" ")
+      .filter((w) => w.length > 2 && !STOPWORDS.has(w))
+  );
+}
+
+/** Overlap coefficient: shared tokens / smaller set. 1 = one title's words are all in the other. */
+export function titleSimilarity(a: string, b: string): number {
+  const ta = titleTokens(a);
+  const tb = titleTokens(b);
+  if (ta.size === 0 || tb.size === 0) return 0;
+  const [small, big] = ta.size <= tb.size ? [ta, tb] : [tb, ta];
+  let shared = 0;
+  for (const w of small) if (big.has(w)) shared++;
+  return shared / small.size;
+}
+
+/** Drop near-duplicate headlines (same story, different wording/source). Keeps newest. */
+export function dedupeItems(items: NewsItem[], threshold = 0.6): NewsItem[] {
+  const sorted = [...items].sort((a, b) => b.published.getTime() - a.published.getTime());
+  const kept: NewsItem[] = [];
+  for (const item of sorted) {
+    if (!normalizeTitle(item.title)) continue;
+    let dup = false;
+    for (const prev of kept) {
+      if (titleSimilarity(item.title, prev.title) >= threshold) {
+        dup = true;
+        break;
+      }
+    }
+    if (!dup) kept.push(item);
+  }
+  return kept;
+}
+
 function withTimeout<T>(p: Promise<T>, ms: number): Promise<T> {
   return new Promise<T>((resolve, reject) => {
     const t = setTimeout(() => reject(new Error("feed timeout")), ms);
@@ -93,16 +141,6 @@ export async function fetchFeeds(): Promise<NewsItem[]> {
   if (all.length === 0) {
     throw new Error("all feeds failed");
   }
-  const seen = new Map<string, NewsItem>();
-  for (const item of all) {
-    const key = normalizeTitle(item.title);
-    if (!key) continue;
-    const prev = seen.get(key);
-    if (!prev || item.published.getTime() > prev.published.getTime()) {
-      seen.set(key, item);
-    }
-  }
-  const deduped = [...seen.values()];
-  deduped.sort((a, b) => b.published.getTime() - a.published.getTime());
+  const deduped = dedupeItems(all);
   return deduped.slice(0, 80);
 }
