@@ -1,9 +1,9 @@
 import React from "react";
 import { Box, Text } from "ink";
-import { formatClock, timeAgo } from "../lib/format.js";
-import type { Mood } from "../lib/impact.js";
-import type { UiTheme } from "../lib/ui-theme.js";
-import { themeColor } from "../lib/ui-theme.js";
+import { formatClock, timeAgo } from "../../lib/format.js";
+import type { Mood } from "../../lib/impact.js";
+import type { UiTheme } from "../ui-theme.js";
+import { themeColor } from "../ui-theme.js";
 
 interface Props {
   updatedAt: Date | null;

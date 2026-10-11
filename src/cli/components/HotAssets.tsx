@@ -1,9 +1,9 @@
 import React, { useMemo } from "react";
 import { Box, Text } from "ink";
-import { hotAssets } from "../lib/impact.js";
-import type { NewsItem } from "../lib/types.js";
-import type { UiTheme } from "../lib/ui-theme.js";
-import { themeColor } from "../lib/ui-theme.js";
+import { hotAssets } from "../../lib/impact.js";
+import type { NewsItem } from "../../lib/types.js";
+import type { UiTheme } from "../ui-theme.js";
+import { themeColor } from "../ui-theme.js";
 
 interface Props {
   items: NewsItem[];

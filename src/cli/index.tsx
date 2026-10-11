@@ -5,11 +5,11 @@ import { render } from "ink";
 import chalk from "chalk";
 import stringWidth from "string-width";
 import App from "./App.js";
-import { fetchFeeds } from "./lib/feeds.js";
-import { normalizeRegionName } from "./lib/regions.js";
-import { impactChipSuffix } from "./lib/impact.js";
-import { severityMeter, timeAgo, truncateByWidth } from "./lib/format.js";
-import type { RegionFilter } from "./lib/types.js";
+import { fetchFeeds } from "../lib/feeds.js";
+import { normalizeRegionName } from "../lib/regions.js";
+import { impactChipSuffix } from "../lib/impact.js";
+import { severityMeter, timeAgo, truncateByWidth } from "../lib/format.js";
+import type { RegionFilter } from "../lib/types.js";
 
 const program = new Command();
 program

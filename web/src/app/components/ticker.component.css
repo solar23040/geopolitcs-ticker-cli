@@ -1,0 +1,12 @@
+.marquee { overflow: hidden; white-space: nowrap; border-bottom: 1px solid var(--border); background: var(--panel); }
+.track { display: inline-flex; align-items: center; animation: scroll linear infinite; will-change: transform; }
+.marquee:hover .track, .marquee:active .track { animation-play-state: paused; }
+.run { display: inline-flex; align-items: center; }
+.tick { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.45rem 0.25rem; font-size: 0.82rem; }
+.tick a { color: var(--text); text-decoration: none; }
+.tick a:hover { color: var(--sel); text-decoration: underline; }
+.region { font-size: 0.68rem; border: 1px solid var(--accent); color: var(--accent); border-radius: 3px; padding: 0 0.3rem; }
+.src { color: var(--dim); font-size: 0.75rem; }
+.chip { font-size: 0.72rem; color: var(--sel); }
+.sep { color: var(--dim); padding: 0 0.75rem; }
+@keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }

@@ -12,10 +12,10 @@ import Footer from "./components/Footer.js";
 import { useNews } from "./hooks/useNews.js";
 import { useQuotes } from "./hooks/useQuotes.js";
 import { useTick } from "./hooks/useTick.js";
-import { marketMood } from "./lib/impact.js";
-import { THEME_NAMES, getUiTheme } from "./lib/ui-theme.js";
-import type { ThemeName } from "./lib/ui-theme.js";
-import type { RegionFilter } from "./lib/types.js";
+import { marketMood } from "../lib/impact.js";
+import { THEME_NAMES, getUiTheme } from "./ui-theme.js";
+import type { ThemeName } from "./ui-theme.js";
+import type { RegionFilter } from "../lib/types.js";
 
 interface Props {
   initialRegion: RegionFilter;

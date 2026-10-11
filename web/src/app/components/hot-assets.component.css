@@ -1,0 +1,10 @@
+.hot { border-top: 1px solid var(--border); padding-top: 0.5rem; }
+.hot h2 { font-size: 0.72rem; letter-spacing: 0.12em; margin: 0 0 0.4rem; color: var(--accent); }
+.hot ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.25rem; }
+.hot li { display: flex; align-items: baseline; gap: 0.5rem; font-size: 0.8rem; }
+.sym { color: var(--sel); }
+.nm { color: var(--dim); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ct { color: var(--text); }
+.pr { font-variant-numeric: tabular-nums; color: var(--dim); }
+.dim { color: var(--dim); font-weight: 400; }
+.up { color: var(--gain); } .down { color: var(--loss); } .mixed { color: var(--accent); }

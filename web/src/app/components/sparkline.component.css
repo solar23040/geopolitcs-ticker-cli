@@ -1,0 +1,4 @@
+.spark polyline.up { stroke: var(--gain); }
+.spark polyline.down { stroke: var(--loss); }
+.spark polyline.flat { stroke: var(--accent); }
+.spark { display: block; }

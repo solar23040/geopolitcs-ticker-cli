@@ -50,7 +50,7 @@ async function fetchOne(symbol: string): Promise<Quote | null> {
 }
 
 export async function fetchQuotes(symbols: string[]): Promise<Map<string, Quote>> {
-  const uniq = [...new Set(symbols)].slice(0, 24);
+  const uniq = [...new Set(symbols)].slice(0, 30);
   const out = new Map<string, Quote>();
   // serve cache first
   const missing: string[] = [];

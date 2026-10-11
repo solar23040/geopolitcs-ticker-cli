@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { fetchQuotes } from "../lib/quotes.js";
-import type { Quote } from "../lib/quotes.js";
+import { fetchQuotes } from "../../lib/quotes.js";
+import type { Quote } from "../../lib/quotes.js";
 
 export function useQuotes(symbols: string[], enabled: boolean): Map<string, Quote> {
   const [quotes, setQuotes] = useState<Map<string, Quote>>(new Map());

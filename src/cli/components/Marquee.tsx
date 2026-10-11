@@ -1,11 +1,11 @@
 import React, { useMemo } from "react";
 import { Box, Text } from "ink";
 import stringWidth from "string-width";
-import { timeAgo } from "../lib/format.js";
-import { impactChipSuffix } from "../lib/impact.js";
-import type { NewsItem, Region } from "../lib/types.js";
-import type { UiTheme } from "../lib/ui-theme.js";
-import { themeColor } from "../lib/ui-theme.js";
+import { timeAgo } from "../../lib/format.js";
+import { impactChipSuffix } from "../../lib/impact.js";
+import type { NewsItem, Region } from "../../lib/types.js";
+import type { UiTheme } from "../ui-theme.js";
+import { themeColor } from "../ui-theme.js";
 
 export function regionColor(r: Region): string {
   switch (r) {

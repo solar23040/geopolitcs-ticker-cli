@@ -1,0 +1,8 @@
+.scrim { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); display: flex; align-items: center; justify-content: center; z-index: 50; }
+.card { background: var(--panel); border: 1px solid var(--accent); border-radius: 6px; padding: 1.2rem 1.5rem; min-width: 18rem; }
+.card h2 { margin: 0 0 0.7rem; font-size: 0.9rem; letter-spacing: 0.1em; color: var(--accent); }
+.card dl { margin: 0 0 1rem; display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.82rem; }
+.card dl div { display: flex; gap: 0.8rem; }
+.card dt { color: var(--sel); min-width: 7rem; }
+.card dd { margin: 0; color: var(--text); }
+.card button { font: inherit; background: transparent; color: var(--accent); border: 1px solid var(--accent); border-radius: 4px; padding: 0.3rem 1rem; cursor: pointer; }

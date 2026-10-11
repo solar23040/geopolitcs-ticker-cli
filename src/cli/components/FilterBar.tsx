@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Text } from "ink";
-import type { RegionFilter } from "../lib/types.js";
-import type { UiTheme } from "../lib/ui-theme.js";
-import { themeColor } from "../lib/ui-theme.js";
+import type { RegionFilter } from "../../lib/types.js";
+import type { UiTheme } from "../ui-theme.js";
+import { themeColor } from "../ui-theme.js";
 
 export const FILTERS: RegionFilter[] = ["All", "Middle East", "Europe", "Asia-Pacific", "Americas", "Africa"];
 

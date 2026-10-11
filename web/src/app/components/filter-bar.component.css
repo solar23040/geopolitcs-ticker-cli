@@ -1,0 +1,9 @@
+.bar { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; justify-content: space-between; padding: 0.55rem 0.25rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.chip { font: inherit; font-size: 0.75rem; background: transparent; color: var(--text); border: 1px solid var(--border); border-radius: 999px; padding: 0.2rem 0.65rem; cursor: pointer; }
+.chip:hover { border-color: var(--accent); }
+.chip.active { background: rgba(255, 176, 0, 0.15); border-color: var(--accent); color: var(--accent); }
+.chip.impact.active { background: rgba(255, 92, 92, 0.15); border-color: var(--loss); color: var(--loss); }
+.chip .n { color: var(--dim); font-size: 0.7rem; }
+.search { font: inherit; font-size: 0.8rem; background: var(--panel); color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 0.3rem 0.6rem; min-width: 10rem; }
+.search:focus { outline: none; border-color: var(--sel); }

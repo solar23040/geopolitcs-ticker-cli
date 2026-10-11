@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
 import { Box, Text } from "ink";
-import { severityMeter, sparkline, timeAgo, truncateByWidth } from "../lib/format.js";
-import type { Quote } from "../lib/quotes.js";
-import type { NewsItem } from "../lib/types.js";
-import type { UiTheme } from "../lib/ui-theme.js";
-import { themeColor } from "../lib/ui-theme.js";
+import { severityMeter, sparkline, timeAgo, truncateByWidth } from "../../lib/format.js";
+import type { Quote } from "../../lib/quotes.js";
+import type { NewsItem } from "../../lib/types.js";
+import type { UiTheme } from "../ui-theme.js";
+import { themeColor } from "../ui-theme.js";
 
 interface Props {
   item: NewsItem | null;

@@ -1,4 +1,43 @@
-import stringWidth from "string-width";
+// Pure TypeScript — no terminal/UI dependencies. Safe for Node + browser type-imports.
+function charWidth(code: number): number {
+  if (code < 0x1100) {
+    // Combining marks / control chars take no width
+    if ((code >= 0x0300 && code <= 0x036f) || (code >= 0x20d0 && code <= 0x20ff) || (code >= 0xfe20 && code <= 0xfe2f)) return 0;
+    return 1;
+  }
+  // Wide ranges (CJK, fullwidth, emoji-ish blocks)
+  if (
+    (code >= 0x1100 && code <= 0x115f) ||
+    code === 0x2329 || code === 0x232a ||
+    (code >= 0x2e80 && code <= 0x303e) ||
+    (code >= 0x3041 && code <= 0x33ff) ||
+    (code >= 0x3400 && code <= 0x4dbf) ||
+    (code >= 0x4e00 && code <= 0xa4cf) ||
+    (code >= 0xa960 && code <= 0xa97f) ||
+    (code >= 0xac00 && code <= 0xd7a3) ||
+    (code >= 0xf900 && code <= 0xfaff) ||
+    (code >= 0xfe10 && code <= 0xfe19) ||
+    (code >= 0xfe30 && code <= 0xfe4f) ||
+    (code >= 0xff00 && code <= 0xff60) ||
+    (code >= 0xffe0 && code <= 0xffe6) ||
+    (code >= 0x1f300 && code <= 0x1faff) ||
+    (code >= 0x20000 && code <= 0x3fffd)
+  ) return 2;
+  return 1;
+}
+
+export function stringWidth(s: string): number {
+  let w = 0;
+  for (const ch of s) {
+    const cp = ch.codePointAt(0) ?? 0;
+    if (cp === 0xfe0f) continue; // variation selector
+    w += charWidth(cp);
+    if (cp > 0xffff) continue;
+  }
+  // Strip ANSI escapes from width
+  // (callers pass plain text; keep simple)
+  return w;
+}
 
 export function timeAgo(d: Date, now: Date = new Date()): string {
   const s = Math.max(0, Math.floor((now.getTime() - d.getTime()) / 1000));
@@ -103,5 +142,3 @@ export function sparkline(points: number[]): string {
 export function severityMeter(sev: number): string {
   return "●".repeat(Math.max(0, Math.min(5, sev))) + "○".repeat(5 - Math.max(0, Math.min(5, sev)));
 }
-
-export { stringWidth };

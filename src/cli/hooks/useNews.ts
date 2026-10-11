@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { fetchFeeds } from "../lib/feeds.js";
-import type { NewsItem } from "../lib/types.js";
+import { fetchFeeds } from "../../lib/feeds.js";
+import type { NewsItem } from "../../lib/types.js";
 
 export interface NewsState {
   items: NewsItem[];
