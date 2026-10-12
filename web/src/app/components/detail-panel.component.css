@@ -1,6 +1,9 @@
 .detail { display: flex; flex-direction: column; gap: 0.5rem; }
 .ttl { font-size: 1rem; margin: 0; line-height: 1.35; }
 .sub { margin: 0; font-size: 0.75rem; color: var(--dim); }
+.summary { margin: 0; font-size: 0.85rem; }
+.srcs { margin: 0; font-size: 0.75rem; color: var(--dim); display: flex; flex-wrap: wrap; gap: 0.25rem 0.6rem; }
+.srcs a { color: var(--sel); }
 .badges { display: flex; align-items: center; gap: 0.7rem; }
 .sev { letter-spacing: 0.15em; color: var(--dim); font-size: 0.85rem; }
 .sev .on { color: var(--accent); }

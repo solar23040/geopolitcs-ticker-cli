@@ -9,4 +9,7 @@
 .ttl { flex: 1 1 12rem; font-size: 0.85rem; }
 .new { font-size: 0.65rem; font-weight: 700; color: #0a0a0b; background: var(--gain); border-radius: 3px; padding: 0 0.3rem; }
 .sub { width: 100%; font-size: 0.72rem; color: var(--dim); }
+.srcs { font-size: 0.72rem; color: var(--sel); cursor: pointer; }
+.srclist { display: flex; flex-wrap: wrap; gap: 0.25rem 0.6rem; width: 100%; font-size: 0.72rem; }
+.srclist a { color: var(--sel); }
 .chips { font-size: 0.72rem; color: var(--sel); }

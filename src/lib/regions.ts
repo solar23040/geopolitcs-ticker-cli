@@ -64,16 +64,30 @@ const GLOBAL_KEYWORDS = [
   "cop29", "global", "world order", "nuclear treaty", "geneva talks"
 ];
 
+function escapeRegExp(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+// Word-boundary match: \b only where the keyword edge is a word char,
+// so "quad" never matches inside "squad" but "u.s." still matches.
+export function keywordRegex(kw: string): RegExp {
+  const t = kw.trim().toLowerCase();
+  const esc = escapeRegExp(t);
+  const pre = /^\w/.test(t) ? "\\b" : "";
+  const suf = /\w$/.test(t) ? "\\b" : "";
+  return new RegExp(`${pre}${esc}${suf}`, "i");
+}
+
 export function tagRegion(text: string): Region {
   const t = ` ${text.toLowerCase()} `;
   const regions = Object.keys(KEYWORDS) as Array<Exclude<Region, "Global">>;
   for (const region of regions) {
     for (const kw of KEYWORDS[region]) {
-      if (t.includes(kw)) return region;
+      if (keywordRegex(kw).test(t)) return region;
     }
   }
   for (const kw of GLOBAL_KEYWORDS) {
-    if (t.includes(kw)) return "Global";
+    if (keywordRegex(kw).test(t)) return "Global";
   }
   return "Global";
 }

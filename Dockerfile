@@ -1,4 +1,4 @@
-FROM node:22-alpine AS build
+FROM node:22-slim AS build
 WORKDIR /app
 
 COPY package.json package-lock.json ./
@@ -8,7 +8,7 @@ RUN npm ci && npm ci --prefix web
 COPY . ./
 RUN npm run build
 
-FROM node:22-alpine AS runtime
+FROM node:22-slim AS runtime
 WORKDIR /app
 ENV NODE_ENV=production
 
@@ -17,6 +17,9 @@ RUN npm ci --omit=dev
 
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/web/dist/web/browser ./web/dist/web/browser
+
+# Writable dir for the local SQLite fallback (app runs as user `node`).
+RUN mkdir -p /app/data && chown node:node /app/data
 
 EXPOSE 3000
 USER node

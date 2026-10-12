@@ -33,7 +33,7 @@ import type { RegionFilter } from "./core/model";
   ],
   template: `
     <div class="shell">
-      <app-header [mood]="mood()" [updatedAt]="news.updatedAt()" [online]="news.online()" />
+      <app-header [mood]="mood()" [updatedAt]="news.updatedAt()" [online]="news.online()" [newCount]="news.newCount()" />
 
       <app-ticker [items]="marqueeItems()" />
 
@@ -67,6 +67,7 @@ import type { RegionFilter } from "./core/model";
               [items]="filtered()"
               [selected]="selected()"
               [now]="tick()"
+              [lastSeenAt]="news.lastSeenAt()"
               (select)="pick($event)"
             />
           }

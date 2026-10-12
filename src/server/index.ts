@@ -4,6 +4,7 @@ import { cors } from "hono/cors";
 import { compress } from "hono/compress";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { fetchFeeds } from "../lib/feeds.js";
+import { getRecent, initDb, toNewsItem } from "../lib/db/items.js";
 import { fetchQuotes } from "../lib/quotes.js";
 import { normalizeRegionName } from "../lib/regions.js";
 import { NEUTRAL_IMPACT } from "../lib/types.js";
@@ -29,8 +30,19 @@ async function refreshNews(): Promise<void> {
     const items = await fetchFeeds();
     newsCache = { items, updatedAt: new Date().toISOString(), error: null };
   } catch (err) {
-    // Keep old data; record error for health endpoint.
-    newsCache = { ...newsCache, error: (err as Error).message };
+    const message = (err as Error).message;
+    // Feeds failed: fall back to recent stored items, else keep old data.
+    try {
+      const rows = await getRecent(48);
+      if (rows.length > 0) {
+        newsCache = { items: rows.map(toNewsItem), updatedAt: newsCache.updatedAt, error: message };
+      } else {
+        newsCache = { ...newsCache, error: message };
+      }
+    } catch (dbErr) {
+      console.error("[db] fallback failed:", (dbErr as Error)?.message ?? dbErr);
+      newsCache = { ...newsCache, error: message };
+    }
   } finally {
     refreshing = false;
   }
@@ -120,7 +132,9 @@ export function createApp(): Hono {
 
   app.get("/api/news", (c) => {
     // Never wait on slow feeds: serve cache, refresh in background if stale.
-    if (Date.now() - Date.parse(newsCache.updatedAt) > CACHE_TTL && newsCache.items.length > 0) {
+    const cacheAge = Date.now() - Date.parse(newsCache.updatedAt);
+    const isStale = cacheAge > CACHE_TTL;
+    if (isStale && newsCache.items.length > 0) {
       void refreshNews();
     } else if (newsCache.items.length === 0 && !refreshing) {
       void refreshNews();
@@ -135,6 +149,9 @@ export function createApp(): Hono {
     if (Number.isFinite(minSev) && minSev > 0) {
       items = items.filter((it) => it.impact.severity >= Math.floor(minSev));
     }
+    if (isStale && newsCache.items.length > 0) {
+      c.header("X-Cache-Stale", "true");
+    }
     return c.json(
       items.slice(0, 80).map((it) => ({
         title: it.title,
@@ -143,6 +160,15 @@ export function createApp(): Hono {
         published: it.published instanceof Date ? it.published.toISOString() : String(it.published),
         region: it.region,
         impact: it.impact ?? NEUTRAL_IMPACT,
+        // Added fields only; original shape untouched.
+        cluster_id: it.cluster_id ?? null,
+        sources: it.sources ?? [{ name: it.source, link: it.link }],
+        source_count: it.source_count ?? 1,
+        fetched_at:
+          it.fetched_at instanceof Date ? it.fetched_at.toISOString() : (it.fetched_at ?? null),
+        summary: it.summary ?? null,
+        classified_by: it.classified_by ?? "keyword",
+        stale: isStale,
       }))
     );
   });
@@ -187,6 +213,7 @@ export function mountStatic(app: Hono): void {
 const app = createApp();
 mountStatic(app);
 
+await initDb().catch((err) => console.error("[db] init failed, running without storage:", (err as Error)?.message ?? err));
 scheduleNewsRefresh();
 
 serve({ fetch: app.fetch, port: PORT, hostname: "0.0.0.0" }, (info) => {

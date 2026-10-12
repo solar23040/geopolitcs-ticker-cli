@@ -3,6 +3,7 @@ web/node_modules/
 dist/
 web/dist/
 web/.angular/
+data/
 .git
 .env
 *.log

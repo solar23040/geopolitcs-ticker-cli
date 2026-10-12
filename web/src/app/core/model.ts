@@ -16,6 +16,14 @@ export interface Headline {
   published: Date;
   region: Region;
   impact: ItemImpact;
+  // Added fields only (all optional, mirror GET /api/news).
+  cluster_id?: string | null;
+  sources?: Array<{ name: string; link: string }>;
+  source_count?: number;
+  fetched_at?: Date | null;
+  summary?: string | null;
+  classified_by?: "keyword" | "gemini";
+  stale?: boolean;
 }
 
 /** Raw JSON shape from GET /api/news (published is an ISO string). */
@@ -26,6 +34,13 @@ export interface ApiHeadline {
   published: string;
   region: Region;
   impact: ItemImpact;
+  cluster_id?: string | null;
+  sources?: Array<{ name: string; link: string }>;
+  source_count?: number;
+  fetched_at?: string | null;
+  summary?: string | null;
+  classified_by?: "keyword" | "gemini";
+  stale?: boolean;
 }
 
 export interface QuoteData {
@@ -55,6 +70,7 @@ export const FILTERS: RegionFilter[] = [
 
 export function toHeadline(a: ApiHeadline): Headline {
   const d = new Date(a.published);
+  const f = a.fetched_at ? new Date(a.fetched_at) : null;
   return {
     title: a.title,
     source: a.source,
@@ -62,6 +78,13 @@ export function toHeadline(a: ApiHeadline): Headline {
     published: Number.isNaN(d.getTime()) ? new Date() : d,
     region: a.region,
     impact: a.impact,
+    cluster_id: a.cluster_id ?? null,
+    sources: a.sources ?? [{ name: a.source, link: a.link }],
+    source_count: a.source_count ?? 1,
+    fetched_at: f && !Number.isNaN(f.getTime()) ? f : null,
+    summary: a.summary ?? null,
+    classified_by: a.classified_by ?? "keyword",
+    stale: a.stale ?? false,
   };
 }
 

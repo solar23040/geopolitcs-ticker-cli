@@ -29,6 +29,9 @@ import type { Mood } from "../core/model";
           <span class="bar" aria-hidden="true"><span [style.width.%]="mood().score * 100"></span></span>
           {{ mood().label }}
         </span>
+        @if (newCount() > 0) {
+          <span class="pill newpill" [attr.aria-label]="newCount() + ' new headlines'">{{ newCount() }} new</span>
+        }
       </div>
     </header>
   `,
@@ -39,6 +42,7 @@ export class HeaderComponent {
   readonly mood = input.required<Mood>();
   readonly updatedAt = input<Date | null>(null);
   readonly online = input<boolean>(true);
+  readonly newCount = input<number>(0);
 
   readonly now = toSignal(timer(0, 1000).pipe(map(() => new Date())), {
     initialValue: new Date(),

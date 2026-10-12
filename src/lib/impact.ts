@@ -27,6 +27,19 @@ function rankDir(d: ImpactDirection): number {
   return 1;
 }
 
+function escapeRe(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+// Word-boundary hit so e.g. "war" doesn't match "forward".
+function wordHit(haystack: string, needle: string): boolean {
+  const t = needle.trim().toLowerCase();
+  if (!t) return false;
+  const pre = /^\w/.test(t) ? "\\b" : "";
+  const suf = /\w$/.test(t) ? "\\b" : "";
+  return new RegExp(`${pre}${escapeRe(t)}${suf}`, "i").test(haystack);
+}
+
 const cache = new Map<string, ItemImpact>();
 
 function normKey(title: string): string {
@@ -41,7 +54,7 @@ export function scoreItem(title: string, _snippet = ""): ItemImpact {
   const matchedThemes: string[] = [];
   const bySymbol = new Map<string, AssetImpact>();
   for (const theme of THEMES) {
-    const matched = theme.patterns.some((p) => t.includes(p));
+    const matched = theme.patterns.some((p) => wordHit(t, p));
     if (!matched) continue;
     matchedThemes.push(theme.id);
     for (const imp of theme.impacts) {
@@ -62,12 +75,12 @@ export function scoreItem(title: string, _snippet = ""): ItemImpact {
   }
   let esc = 0;
   for (const e of ESCALATION) {
-    if (t.includes(e.w)) esc += e.pts;
+    if (wordHit(t, e.w)) esc += e.pts;
   }
   const raw = 1 + Math.min(2, matchedThemes.length - 1) + Math.min(2, esc);
   const severity = Math.max(1, Math.min(5, raw)) as ItemImpact["severity"];
-  const hasDeesc = DEESCALATION.some((w) => t.includes(w));
-  const hasRiskOff = RISKOFF_HINTS.some((w) => t.includes(w));
+  const hasDeesc = DEESCALATION.some((w) => wordHit(t, w));
+  const hasRiskOff = RISKOFF_HINTS.some((w) => wordHit(t, w));
   let sentiment: ItemImpact["sentiment"] = "neutral";
   if (hasDeesc && severity <= 3) sentiment = "risk-on";
   else if (severity >= 3 || hasRiskOff) sentiment = "risk-off";

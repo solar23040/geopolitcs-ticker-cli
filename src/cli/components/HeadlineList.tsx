@@ -70,7 +70,8 @@ function HeadlineList({ items, selected, height, width, now, noColor, theme, foc
           const fresh = isNew(it.published, now);
           const chip = impactChipSuffix(it.impact, 3);
           const ago = timeAgo(it.published, now);
-          const inner = `${it.title} — ${it.source} · ${ago}${chip ? ` ${chip}` : ""}`;
+          const multi = (it.source_count ?? 1) > 1 ? ` · Reported by ${it.source_count} sources` : "";
+          const inner = `${it.title} — ${it.source} · ${ago}${multi}${chip ? ` ${chip}` : ""}`;
           const truncated = truncateByWidth(inner, Math.max(10, width - 14));
           return (
             <Box key={`${globalIdx}-${it.title}`} width="100%">

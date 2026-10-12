@@ -11,6 +11,16 @@ import type { Headline, QuoteData } from "../core/model";
       <article class="detail" aria-label="Headline detail">
         <h2 class="ttl">{{ it.title }}</h2>
         <p class="sub">{{ it.source }} · {{ it.published | timeAgo }}</p>
+        @if (it.summary) {
+          <p class="summary">{{ it.summary }}</p>
+        }
+        @if ((it.source_count ?? 1) > 1) {
+          <p class="srcs">Reported by {{ it.source_count }} sources:
+            @for (s of it.sources ?? []; track s.name) {
+              <a [href]="s.link" target="_blank" rel="noopener">{{ s.name }}</a>
+            }
+          </p>
+        }
         <div class="badges">
           <span class="sev" aria-label="Severity {{ it.impact.severity }} of 5">
             @for (i of [1, 2, 3, 4, 5]; track i) {

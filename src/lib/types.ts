@@ -31,6 +31,15 @@ export interface NewsItem {
   published: Date;
   region: Region;
   impact: ItemImpact;
+  // Added: story clustering + hybrid classification + new-badge support.
+  // All optional so the original response shape stays intact.
+  cluster_id?: string;
+  sources?: Array<{ name: string; link: string }>;
+  source_count?: number;
+  fetched_at?: Date;
+  summary?: string;
+  classified_by?: "keyword" | "gemini";
+  stale?: boolean;
 }
 
 export const ALL_REGIONS: Region[] = [
